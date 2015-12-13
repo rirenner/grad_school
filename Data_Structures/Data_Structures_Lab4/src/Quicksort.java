@@ -35,7 +35,7 @@ public class Quicksort
 	 * <dt><b>Postconditions:</b><dd>
 	 * All elements to the left of the element in question are <= the element,
 	 * 	 	and all elements to the right are >= the element's value
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static int partition(int inputArray[], int lb, int ub)
 	{
@@ -75,7 +75,7 @@ public class Quicksort
 	 * @returns void
 	 * <dt><b>Postconditions:</b><dd>
 	 * The two elements input as parameters are swapped within the input array
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static void swap(int[] input, int val1, int val2)
 	{
@@ -94,7 +94,7 @@ public class Quicksort
 	 * @returns int median value among the 3 numbers
 	 * <dt><b>Postconditions:</b><dd>
 	 * None
-	 * @author Christine Herlihy
+	 * 
 	 */
 	 public static int medianOfThree(int[] in, int left, int right)
 	 {
@@ -136,7 +136,7 @@ public class Quicksort
 		 * 			position
 		 * <dt><b>Postconditions:</b><dd>
 		 * None
-		 * @author Christine Herlihy
+		 * 
 		 */
 		  public static int partitionMedian(int[] intArray, int left, int right, int pivot) {
 			    int leftPointer = left;
@@ -178,7 +178,7 @@ public class Quicksort
 	 * @returns int []; the sorted input array
 	 * <dt><b>Postconditions:</b><dd>
 	 * The input array is sorted in ascending order
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static int [] quicksortFirst(int inputArray[])
 	{
@@ -242,7 +242,7 @@ public class Quicksort
 	 * @returns void (in-place sort) 
 	 * <dt><b>Postconditions:</b><dd>
 	 * The input array is sorted in ascending order
-	 * @author Christine Herlihy
+	 * 
 	 */
 	 public static void quicksortMedianOf3(int[] intArray, int left, int right)
 	 {
@@ -282,7 +282,7 @@ public class Quicksort
 	 * @returns void (in-place sort) 
 	 * <dt><b>Postconditions:</b><dd>
 	 * The input array is sorted in ascending order
-	 * @author Christine Herlihy
+	 * 
 	 */
 	 public static void quicksortRecur50(int[] input, int left, int right)
 	 {
@@ -326,7 +326,7 @@ public class Quicksort
 		 * @returns void (in-place sort) 
 		 * <dt><b>Postconditions:</b><dd>
 		 * The input array is sorted in ascending order
-		 * @author Christine Herlihy
+		 * 
 		 */
 	 public static void quicksortRecur100(int[] input, int left, int right)
 	 {
@@ -367,7 +367,7 @@ public class Quicksort
 	 * @returns int []; the sorted input array
 	 * <dt><b>Postconditions:</b><dd>
 	 * The input array is sorted in ascending order
-	 * @author Christine Herlihy
+	 * 
 	 */
     public static int[] insertionSort(int[] input){
 
@@ -398,7 +398,7 @@ public class Quicksort
 	 * @returns int []; the sorted input array
 	 * <dt><b>Postconditions:</b><dd>
 	 * The input array is sorted in ascending order
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static int[] manualSort(int[] input,  int left, int right)
 	{

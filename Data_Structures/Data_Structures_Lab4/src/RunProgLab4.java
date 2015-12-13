@@ -338,7 +338,7 @@ public class RunProgLab4 {
 	 * @returns temp []: a copy of the input array
 	 * <dt><b>Postconditions:</b><dd>
 	 * Temp contains the contents of the input array
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static int[] copyArray(int[] input)
 	{

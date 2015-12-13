@@ -19,7 +19,7 @@ public class HeapSort
 	 * @returns int []; the sorted input array
 	 * <dt><b>Postconditions:</b><dd>
 	 * The input array is sorted in ascending order
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static int[] heapSort(int[] input)
 	{
@@ -121,7 +121,7 @@ public class HeapSort
 	 * @returns void
 	 * <dt><b>Postconditions:</b><dd>
 	 * The two elements input as parameters are swapped within the input array
-	 * @author Christine Herlihy
+	 * 
 	 */
 	public static void swap(int[] input, int val1, int val2)
 	{

@@ -1,5 +1,4 @@
-/* Christine Herlihy
- * EN 605.202 Data Structures
+/* Data Structures
  * Lab #4: Sorting Algorithms Comparison
  * README file
  */

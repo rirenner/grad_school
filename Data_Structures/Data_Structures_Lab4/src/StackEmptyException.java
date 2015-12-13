@@ -19,7 +19,7 @@ public class StackEmptyException extends Exception
 	 * @returns None
 	 * <dt><b>Postconditions:</b><dd>
 	 * Exception is handled by calling method
-	 * @author Christine Herlihy
+	 * 
 	 */	
 	public StackEmptyException () 
 	{
@@ -36,7 +36,7 @@ public class StackEmptyException extends Exception
 	 * @returns None
 	 * <dt><b>Postconditions:</b><dd>
 	 * Exception is handled by calling method
-	 * @author Christine Herlihy
+	 * 
 	 */	
     public StackEmptyException (String message) {
         super (message);
@@ -52,7 +52,7 @@ public class StackEmptyException extends Exception
 	 * @returns None
 	 * <dt><b>Postconditions:</b><dd>
 	 * Exception is handled by calling method
-	 * @author Christine Herlihy
+	 * 
 	 */	
     public StackEmptyException (Throwable cause) {
         super (cause);
@@ -68,7 +68,7 @@ public class StackEmptyException extends Exception
 	 * @returns None
 	 * <dt><b>Postconditions:</b><dd>
 	 * Exception is handled by calling method
-	 * @author Christine Herlihy
+	 * 
 	 */	
     public StackEmptyException (String message, Throwable cause) {
         super (message, cause);
