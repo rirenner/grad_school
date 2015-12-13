@@ -1,0 +1,176 @@
+Input Matrix #1:
+
+ 5
+
+Order: 1
+The determinant is: 5.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #2:
+
+ 2 3
+ 5 9
+
+Order: 2
+The determinant is: 3.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #3:
+
+ 3 -2 4
+ -1 5 2
+ -3 6 4
+
+Order: 3
+The determinant is: 64.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #4:
+
+ 2 4 5 6
+ 0 3 6 9
+ 0 0 9 8
+ 0 0 0 5
+
+Order: 4
+The determinant is: 270.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #5:
+
+ 2 4 5 6
+ 0 0 0 0
+ 0 0 9 8
+ 0 0 0 5
+
+Order: 4
+The determinant is: 0.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #6:
+
+ 2 0 0 0
+ 0 3 0 0
+ 0 0 9 0
+ 0 0 0 5
+
+Order: 4
+The determinant is: 270.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #7:
+
+ 2 4 0 6
+ 1 3 0 0
+ 4 0 0 8
+ 2 5 0 5
+
+Order: 4
+The determinant is: 0.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #8:
+
+ 6 4 6 4 6 4
+ 1 2 3 4 5 6
+ 6 5 4 3 2 1
+ 3 2 3 2 3 2
+ 4 6 4 6 4 6
+ 1 1 1 1 1 1
+
+Order: 6
+The determinant is: 0.0
+It took 2 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #9:
+
+ 1 3 4
+ 5 6 7
+ 9 0 8
+
+Order: 3
+The determinant is: -99.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #10:
+
+ 8 9 1 2 3
+ 2 3 1 0 4
+ 3 7 0 1 2
+ 8 2 0 0 0
+ 0 0 1 2 0
+
+Order: 5
+The determinant is: 88.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #11:
+
+ 0 2 1 1
+ 3 4 5 2
+ 2 9 8 4
+ 3 3 3 3
+
+Order: 4
+The determinant is: -9.0
+It took 0 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #12:
+
+ 1 2 3 4 5 6 7
+ 2 5 7 9 0 1 3
+ 3 2 1 8 9 9 2
+ 0 1 2 3 4 5 6
+ 0 0 3 4 7 8 0
+ 6 7 8 2 3 1 0
+ 0 4 6 8 3 2 1
+
+Order: 7
+The determinant is: -1148.0
+It took 5 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #13:
+
+ 1 2 3 4 5 6 7 8
+ 2 5 7 9 0 1 3 4
+ 3 2 1 8 9 9 2 2
+ 0 1 2 3 4 5 6 4
+ 0 0 3 4 7 8 0 1
+ 6 7 8 2 3 1 0 5
+ 0 4 6 8 3 2 1 3
+ 0 0 1 2 0 8 6 4
+
+Order: 8
+The determinant is: -464184.0
+It took 47 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+
+Input Matrix #14:
+
+ 1 2 3 4 5 6 7 8 3
+ 2 5 7 9 0 1 3 4 2
+ 3 2 1 8 9 9 2 2 0
+ 0 1 2 3 4 5 6 4 5
+ 0 0 3 4 7 8 0 1 6
+ 6 7 8 2 3 1 0 5 7
+ 0 4 6 8 3 2 1 3 8
+ 0 0 1 2 0 8 6 4 2
+ 4 5 6 4 5 2 3 5 5
+
+Order: 9
+The determinant is: 0.0
+It took 171 nanoseconds to calculate this determinant
+#----------------------------------------------------#
+

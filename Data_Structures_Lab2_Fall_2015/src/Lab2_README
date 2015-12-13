@@ -1,0 +1,12 @@
+/* Christine Herlihy
+ * EN 605.202 Data Structures
+ * Lab #2: Recursive algorithm to compute the determinant of a matrix 
+ * README file
+ */
+ 
+ The source code in this assignment can be compiled with JDK 8 from the command line.
+
+To run the program, use the following command line prompt: 
+java RunProgramLab2 /Users/christine/Documents/workspace2/Data_Structures_Lab2_Fall_2015/src/DS_Lab2_InputTxt.txt /Users/christine/Documents/workspace2/Data_Structures_Lab2_Fall_2015/src/DS_Lab2_InputTxt.txt
+
+
