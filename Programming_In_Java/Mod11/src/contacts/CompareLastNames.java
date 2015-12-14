@@ -11,7 +11,7 @@ public class CompareLastNames implements Comparator<String>
 	 @param String a : first string to compare
 	 @param String b: second string to compare
 	 @return int : the int value returned is = 0 if strings are lex. equal; int > 0 if a > b; int < 0 if a < b
-	 @author  Christine Herlihy
+	
 	*/
 	public int compare(String a, String b) 
 	{
