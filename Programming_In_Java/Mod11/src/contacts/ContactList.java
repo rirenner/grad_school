@@ -31,7 +31,6 @@ public class ContactList
 	  @return void
 	  @throws FileNotFoundException
 	  @throws IOException 
-	  @author  Christine Herlihy
 	 */
 	public static void main(String args[]) throws FileNotFoundException, IOException
 	{
