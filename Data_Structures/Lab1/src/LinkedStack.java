@@ -1,5 +1,4 @@
-/* Christine Herlihy
- * EN 605.202 Data Structures
+/* 
  * Lab #1: Use of Stacks
  * CLASS: LinkedStack (implements MakeStack interface) 
  */
