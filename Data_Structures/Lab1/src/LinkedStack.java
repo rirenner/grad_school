@@ -30,7 +30,6 @@ public class LinkedStack implements MakeStack
 	 * @returns none
 	 * <dt><b>Postconditions:</b><dd>
 	 * A new LinkedStack object is instantiated
-	 * @author Christine Herlihy
 	 */
 	public void LinkedStack()
 	{
@@ -48,7 +47,6 @@ public class LinkedStack implements MakeStack
 	 * @returns int size (size of the current stack)
 	 * <dt><b>Postconditions:</b><dd>
 	 * None (stack is unchanged) 
-	 * @author Christine Herlihy
 	 */
 	public int getSize()
 	{		
@@ -63,7 +61,6 @@ public class LinkedStack implements MakeStack
 	 * @returns None
 	 * <dt><b>Postconditions:</b><dd>
 	 * Stack size parameter is changed  (actual contents unchanged) 
-	 * @author Christine Herlihy
 	 */	
 	public void setSize(int newSize)
 	{
@@ -80,7 +77,6 @@ public class LinkedStack implements MakeStack
 	 * @returns boolean TRUE if empty; FALSE if stack contains elements 
 	 * <dt><b>Postconditions:</b><dd>
 	 * None (stack is unchanged) 
-	 * @author Christine Herlihy
 	 */
 	public boolean isEmpty()
 	{
@@ -102,7 +98,6 @@ public class LinkedStack implements MakeStack
 	 * @returns the value of the item on top of the stack 
 	 * <dt><b>Postconditions:</b><dd>
 	 * None (stack is unchanged) 
-	 * @author Christine Herlihy
 	 */	
 	public  String peek()
 	{
@@ -136,7 +131,6 @@ public class LinkedStack implements MakeStack
 	 * @returns None
 	 * <dt><b>Postconditions:</b><dd>
 	 * The item is added to the top of the stack; stack size increases by 1
-	 * @author Christine Herlihy
 	 */		
 	//public void push (String elementToPush)
 	public void push (StackNode elementToPush)
@@ -161,7 +155,6 @@ public class LinkedStack implements MakeStack
 	 * <dt><b>Postconditions:</b><dd>
 	 * The element at the top of the stack is removed; stack size decreases
 	 * 	by 1.
-	 * @author Christine Herlihy
 	 */		
 	public String pop()
 	{
@@ -206,7 +199,6 @@ public class LinkedStack implements MakeStack
 	 * @returns char [] : the stack contents in a character array
 	 * <dt><b>Postconditions:</b><dd>
 	 * None (stack is unchanged)
-	 * @author Christine Herlihy
 	 */		
 	public String [] stackToString()
 	{
