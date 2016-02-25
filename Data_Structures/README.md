@@ -1,3 +1,3 @@
 #Data Structures
 
-This repo contains labs from my Java-based data structures and algorithms course. 
+This directory contains labs from my Java-based data structures and algorithms course. 
