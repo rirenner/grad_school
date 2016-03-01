@@ -2,7 +2,7 @@
 HW #5
 *****
 
-##Exercises [from the textbook]:
+###Exercises [from the textbook]:
  
 ###2.20:
 Find the shortest sequence of MIPS instructions that extracts bits 16 down to 11 from register $t0 
@@ -30,11 +30,11 @@ The most appropriate instruction format is the I-type/I-format.
 #####2.25.2
 What is the shortest sequence of MIPS instructions that performs the same operation?
 
-    LOOP: slt $t3, $t2, $zero # Set temp var $t3 to 1 if $t2 < 0; else, set $t3 to zero  
-          beq $t3, $zero, Exit # When the slt command results in zero, R[rs] is !> 0; terminate loop and go to EXIT
+    LOOP: slt $t3, $zero, $t2 # Set temp var $t3 to 1 if 0< $t2; else, set $t3 to zero  
+          beq $t3, $zero, DONE # When the slt command results in zero, R[rs] is !> 0; terminate loop and go to DONE
           sub $t2, $t2, 1 # if (R[rs]>0), decrement R[rs] by 1
           j LOOP # iterate again through LOOP if (R[rs]>0)
-     EXIT:
+     DONE:
 
 ###2.26  
 (Note: there is no 'subi' instruction. The textbook has a 'typo'.)
@@ -153,6 +153,8 @@ The value in the register $s2 is **20**
 
 #####2.26.2
 For each of the loops above, write the equivalent C code routine. Assume that the registers $s1, $s2, $t1, and $t2 are integers A, B, i, and temp, respectively.
+
+    
 
 #####2.26.3
 For the loops written in MIPS assembly above, assume that the reigster $t1 is initialized to the value N. How many MIPS instructions are executed?
