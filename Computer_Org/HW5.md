@@ -50,8 +50,106 @@ Consider the following MIPS loop:
 #####2.26.1
 Assume that the register $t1 is initialized to the value 10. What is the value in the register $s2 assuming $s2 is initially zero?
 
+First iteration:
 
+    LOOP: slt $t2, $0, $t1 # 0 < 10; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 10 - 1= 9
+        addi $s2, $s2, 2 # $s2 = 0 + 2= 2
+        j    LOOP # iterate again
+    DONE:
 
+Second iteration:
+
+    LOOP: slt $t2, $0, $t1 # 0 < 9; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 9-1= 8
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 4
+        j    LOOP # iterate again
+    DONE:
+
+Third iteration:
+
+    LOOP: slt $t2, $0, $t1 # 0 < 8; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 8-1=7
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 6
+        j    LOOP # iterate again
+    DONE:
+    
+Fourth iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 7; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 7-1= 6
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 8
+        j    LOOP # iterate again
+    DONE: 
+    
+ Fifth iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 6; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 6-1=5
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 10
+        j    LOOP # iterate again
+    DONE: 
+
+Sixth iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 5; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 5-1 =4
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 12
+        j    LOOP # iterate again
+    DONE: 
+
+Seventh iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 4; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 4-1=3
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 14
+        j    LOOP # iterate again
+    DONE: 
+
+Eigth iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 3; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 3-1=2
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 16
+        j    LOOP # iterate again
+    DONE: 
+
+Ninth iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 2; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 2-1=1
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 18
+        j    LOOP # iterate again
+    DONE: 
+
+Tenth iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 < 1; here, $t2 = 1
+        beq $t2, $0, DONE # 1 != 0; go to next instruction
+        sub $t1, $t1, 1 # $t1 = 1-1=0
+        addi $s2, $s2, 2 # $s2 = $s2 + 2 = 20
+        j    LOOP # iterate again
+    DONE: 
+
+Eleventh iteration:
+
+    LOOP: slt $t2, $0, $t1 #  0 == 0; here, $t2 = 0
+        beq $t2, $0, DONE # 0 == 0; go to DONE
+        sub $t1, $t1, 1 
+        addi $s2, $s2, 2 
+        j    LOOP 
+    DONE: 
+
+The value in the register $s2 is **20**
 
 #####2.26.2
 For each of the loops above, write the equivalent C code routine. Assume that the registers $s1, $s2, $t1, and $t2 are integers A, B, i, and temp, respectively.
