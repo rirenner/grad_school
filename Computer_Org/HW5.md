@@ -9,8 +9,11 @@ Find the shortest sequence of MIPS instructions that extracts bits 16 down to 11
 and uses the value of this field to replace bits 31 down to 26 in register $t1 without changing 
 the other 26 bits of register $t1
 
-
-
+    srl $t2, $t0, 10 //Shift $t0 10 bits to the right (i.e. get the sequence of bits we want to keep at the beginning of the word)
+    sll $t2, $t2, 26 //Shift  $t2 26 bits to the left; bits 0-25 will be zeros
+    sll $t1, $t1, 6 //Shift $t1 6 bits to the left; cut off bits 26-31, which will be replaced by zeros
+    srl $t1, $t1, 6 //Shift $t1 6 bits to the right, so that the last 6 bits contain zeros
+    add $t1, $t2, $t1 //add $t1 and $t2; since bits 0-26 of $t2 are 0, and bits 26-31 of $t2 are 0, $t1 now contains the result
  
 ###2.25 
 The following instruction is not included in the MIPS instruction set:
