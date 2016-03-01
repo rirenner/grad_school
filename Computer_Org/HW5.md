@@ -24,9 +24,17 @@ This is a 'repeat' instruction that tests a counter value, subtracts one from th
 #####2.25.1:
 If this instruction were to be implemented in the MIPS instruction set, what is the most appropriate instruction format?
 
+The most appropriate instruction format is the I-type/I-format. 
+
 #####2.25.2
 What is the shortest sequence of MIPS instructions that performs the same operation?
- 
+
+    LOOP: slt $t3, $t2, $zero //Set temp var $t3 to 1 if $t2 < 0; else, set $t3 to zero  
+          beq $t3, $zero, Exit //When the slt command results in zero, R[rs] is !> 0; terminate loop and go to EXIT
+          sub $t2, $t2, 1 //if (R[rs]>0), decrement R[rs] by 1
+          j LOOP //iterate again through LOOP if (R[rs]>0)
+     EXIT:
+
 ###2.26  
 (Note: there is no 'subi' instruction. The textbook has a 'typo'.)
 Consider the following MIPS loop:
