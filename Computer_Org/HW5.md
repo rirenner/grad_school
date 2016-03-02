@@ -171,20 +171,28 @@ Base case: N= 0. If N=0, only 2 MIPS instructions are executed:
         j    LOOP 
     DONE: 
 
-For any value of N > 0, ((N full loops)*(2 )) MIPS instructions must be executed; each full loop contains 5 MIPS instructions.
-Therefore, if the register $t1 is initialized to the value N, a total of **(5*N)+2** MIPS instructions are executed. 
+For any value of N > 0, (N full loops + 2 lines) of MIPS instructions must be executed; each full loop contains 5 MIPS instructions.
+Therefore, if the register $t1 is initialized to the value N, a total of (5*N)+2 MIPS instructions are executed. 
 
 ###Additional exercises:
 #####For each of these pseudo-instructions, write the MIPS hardware instructions that the Assembler would use to implement them.  Do not destroy the values in the source registers.  ( Use only the minimum number of instructions needed.)
- 
+
      abs  $s4, $s1      #  absolute value;  page A-51
 
+Answer:
+
+         bgez $s1, POS #if the integer in register $s1 is >=0, then go to POS (no need to invert bits)
+         nor $s4, $s1, $zero #if the integer in register $s1 < 0, $s1 NOR $zero will invert each bit
+         addi $s4, $s4, 1 #add one to get the two's complement of the original (negative) integer
+     POS: add $s4, $s1, $zero #the integer in $s1 >=0; adding $s1 + $zero lets us "move" the value into the destination register, $s4
 
 
-
-
-
- 
      rol  $t7, $t3, 8   #  rotate left;  page A-56
+
+Answer:
+
+
  
      ld   $t5, 0($t8)   # load double;  page A-67
+
+Answer:
