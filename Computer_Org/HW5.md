@@ -1,5 +1,6 @@
 
-HW #5
+
+**HW #5**
 *****
 
 ###Exercises [from the textbook]:
@@ -191,7 +192,13 @@ Answer:
 
 Answer:
 
+https://www.utdallas.edu/~dodge/EE2310/lec14.pdf gives an explanation of rotate left: "For a left rotate (rol), bits shifted off the left end of a data word fill the vacated positions on the right"
 
+Thus, here, we want to rotate the contents of $t3 8 bits to the left, and store the result in $t7
+
+    sll $t0, $t3, 8 #shift the contents of $t3 8 bits to the left, and store the result in $t0
+    srl $t1, $t3, 8 #shift the contents of $t3 8 bits to the right, and store the result in $t1
+    or $t7, $t0, $t1 #perform bitwise OR $t0 | $t1, and store the results in $t7
  
      ld   $t5, 0($t8)   # load double;  page A-67
 
