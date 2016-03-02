@@ -1,5 +1,6 @@
 
-
+Christine Herlihy
+3/1/16
 **HW #5**
 *****
 
@@ -178,6 +179,8 @@ Therefore, if the register $t1 is initialized to the value N, a total of (5*N)+2
 ###Additional exercises:
 #####For each of these pseudo-instructions, write the MIPS hardware instructions that the Assembler would use to implement them.  Do not destroy the values in the source registers.  ( Use only the minimum number of instructions needed.)
 
+####Addtl. Exercise #1:
+
      abs  $s4, $s1      #  absolute value;  page A-51
 
 Answer:
@@ -187,6 +190,7 @@ Answer:
          addi $s4, $s4, 1 #add one to get the two's complement of the original (negative) integer
      POS: add $s4, $s1, $zero #the integer in $s1 >=0; adding $s1 + $zero lets us "move" the value into the destination register, $s4
 
+####Addtl. Exercise #2:
 
      rol  $t7, $t3, 8   #  rotate left;  page A-56
 
@@ -199,9 +203,19 @@ Thus, here, we want to rotate the contents of $t3 8 bits to the left, and store 
     sll $t0, $t3, 8 #shift the contents of $t3 8 bits to the left, and store the result in $t0
     srl $t1, $t3, 24 #shift the contents of $t3 24 bits to the right, and store the result in $t1
     or $t7, $t0, $t1 #perform bitwise OR $t0 | $t1, and store the results in $t7
- 
+
+####Addtl. Exercise #3:
+
      ld   $t5, 0($t8)   # load double;  page A-67
  
- 
+ From pg. 67: ld rdest, address # load the 64-bit quantity at *address* into registers rdest and rdest +1
 
 Answer:
+
+    lui $t8, <16 upper bits> # from first half of 64-bit quantity
+    ori $t5, $t8, <16 lower bits> # from first half of 64-bit quantity
+    lw $t5, 0($t8)
+    sll $t0, $t8, 32 #access second half of input
+    lui $t0, ,16 upper bits> # from second half of 64-bit quantity
+    ori $t6, $t0, <16 lower bits> # from first half of 64-bit quantity
+    lw $t6, 4($t8)
