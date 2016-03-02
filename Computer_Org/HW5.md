@@ -1,6 +1,4 @@
-
-Christine Herlihy
-3/1/16 **HW #5**
+**HW #5**
 *****
 
 ###Exercises [from the textbook]:
@@ -204,6 +202,7 @@ Thus, here, we want to rotate the contents of $t3 8 bits to the left, and store 
     or $t7, $t0, $t1 #perform bitwise OR $t0 | $t1, and store the results in $t7
 
 ####Addtl. Exercise #3:
+*This one is wrong; need to correct
 
      ld   $t5, 0($t8)   # load double;  page A-67
  
