@@ -197,9 +197,11 @@ https://www.utdallas.edu/~dodge/EE2310/lec14.pdf gives an explanation of rotate 
 Thus, here, we want to rotate the contents of $t3 8 bits to the left, and store the result in $t7
 
     sll $t0, $t3, 8 #shift the contents of $t3 8 bits to the left, and store the result in $t0
-    srl $t1, $t3, 8 #shift the contents of $t3 8 bits to the right, and store the result in $t1
+    srl $t1, $t3, 24 #shift the contents of $t3 24 bits to the right, and store the result in $t1
     or $t7, $t0, $t1 #perform bitwise OR $t0 | $t1, and store the results in $t7
  
      ld   $t5, 0($t8)   # load double;  page A-67
+ 
+ 
 
 Answer:
