@@ -1,7 +1,6 @@
 
 Christine Herlihy
-3/1/16
-**HW #5**
+3/1/16 **HW #5**
 *****
 
 ###Exercises [from the textbook]:
