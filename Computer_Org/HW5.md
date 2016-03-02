@@ -25,7 +25,7 @@ This is a 'repeat' instruction that tests a counter value, subtracts one from th
 #####2.25.1:
 If this instruction were to be implemented in the MIPS instruction set, what is the most appropriate instruction format?
 
-The most appropriate instruction format is the I-type/I-format. 
+The most appropriate instruction format is the **I-type/I-format**. 
 
 #####2.25.2
 What is the shortest sequence of MIPS instructions that performs the same operation?
@@ -154,15 +154,36 @@ The value in the register $s2 is **20**
 #####2.26.2
 For each of the loops above, write the equivalent C code routine. Assume that the registers $s1, $s2, $t1, and $t2 are integers A, B, i, and temp, respectively.
 
-    
+     while(i > 0){
+         i= i-1 //Decrement i by one during each iteration of the loop (sub $t1, $t1, 1)
+         B = B + 2 //Increment B by 2 each time (addi $s2, $s2, 2)
+      } //exit loop 
 
 #####2.26.3
 For the loops written in MIPS assembly above, assume that the reigster $t1 is initialized to the value N. How many MIPS instructions are executed?
 
-##Additional exercises:
+Base case: N= 0. If N=0, only 2 MIPS instructions are executed:
+
+        LOOP: slt $t2, $0, $t1 #  0 == 0; here, $t2 = 0  [#1]
+        beq $t2, $0, DONE # 0 == 0; go to DONE           [#2]
+        sub $t1, $t1, 1 
+        addi $s2, $s2, 2 
+        j    LOOP 
+    DONE: 
+
+For any value of N > 0, ((N full loops)*(2 )) MIPS instructions must be executed; each full loop contains 5 MIPS instructions.
+Therefore, if the register $t1 is initialized to the value N, a total of **(5*N)+2** MIPS instructions are executed. 
+
+###Additional exercises:
 #####For each of these pseudo-instructions, write the MIPS hardware instructions that the Assembler would use to implement them.  Do not destroy the values in the source registers.  ( Use only the minimum number of instructions needed.)
  
      abs  $s4, $s1      #  absolute value;  page A-51
+
+
+
+
+
+
  
      rol  $t7, $t3, 8   #  rotate left;  page A-56
  
