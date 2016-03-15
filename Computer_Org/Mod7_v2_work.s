@@ -71,7 +71,7 @@ main:
         lw $t9, factorialA
         lw $s1, factorialB
         
-        # Divide (n-k)!/k!    ## NOT DONE YET. what you want is to factor out what num and denom have in common (LOOP, n-- each time while n > n-k
+        # Divide (n-k)!/k!    ## what you want is to factor out what num and denom have in common (LOOP, n-- each time while n > n-k
         div $v0, $t9, $s1
         sw $v0, answer
         
@@ -136,7 +136,7 @@ L1:     addi $a0, $a0, -1 # n := n-1
 pfctrlDenom: sw $ra, 4($sp) # save the return address
         sw $a0, 0($sp) # save the current value of n
         addi $sp, $sp, -8 # move stack pointer
-        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
+        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   
         beq $t0, $zero, L2 # not, calculate n(n-1)!
         addi $v0, $zero, 1 # n=1; n!=1
         jr $ra # now multiply
