@@ -1,20 +1,21 @@
 
-
 .data
         prompt1:	.asciiz "\nEnter the number of balls in pool: "
-        prompt2:	.asciiz "\nEnter the number of balls to select: "  #ERROR handling! make sure this val is < 12 AND < the number of balls in the pool!!!
+        prompt2:	.asciiz "\nEnter the number of balls to select: "  #Exception: make sure this val is < 12 AND < the number of balls in the pool
+        prompt3:	.asciiz "\nEnter 1 to calculate normal odds; enter 2 to calculate odds of winning the PowerBall jackpot grand prize: " 
 	error1:		.asciiz "\nError: the number of balls selected must be an integer between 1 and 11. Please start over."
 	error2:         .asciiz "\nError: the number of balls selected must be <= the number of balls in the pool. Please start over."
-	resultMessage:	.ascii "\nThe odds are 1 in "
+	resultMessage:	.asciiz "\nThe odds are 1 in "
+	stop:		.asciiz "\n\nProgram complete.\n"
 	numPool:	.word 0
 	numSelect: 	.word 0
-	numRedBall:	.word 26 # The red ball is C(26, 1); = 26!/(1!*25!) = 26; hard-coded because there is only ONE red ball and range is 1:26 
+	powerballBool:	.word 1 # The red ball is C(26, 1); = 26!/(1!*25!) = 26; there is only ONE red ball; init to 1; will change pending user input
 	numDiff:	.word 0	# To store numPool- numSelect (i.e. n-k in combinatorics)
 	factorialA:    	.word 0
 	factorialB: 	.word 0
 	answer:		.word 0
 	
-############################################################################################################	
+######################################################################################################################################################	
 .text
 
 .globl main
@@ -51,31 +52,48 @@ main:
         lw $t5, numPool # load word numPool into register $t5 
         slt  $t6, $v0, $t5 # if numSelect < numPool + 1 , $t4 = 1; else, $t4 = 0
         bne $t6, 1, tooBig # if numSelect is not in range, branch to exception handling
-
+        
+        # Prompt user re: Powerball (should the odds of matching the powerball be factored in? 1 red ball; range= [1,26])      
+        li $v0, 4 # print prompt3
+        la $a0, prompt3 # load address
+        syscall
+        
+        # Get user input from keyboard re: normal odds (powerballBool = 1) or powerball jackpot odds (powerballBool=26)
+        li $v0, 5 # read integer input
+        syscall
+              
+        # Store user input in the global variable powerballBool
+       	sw $v0, powerballBool # store user input in variable powerballBool
+       	jal powerball # sub-routine to handle user input re: powerball
+        
         # Calculate (n-k) and then call factorial function [ i.e. get (n:n-k)! ]
         lw $t7, numPool	# load word numPool into register $t7 
         lw $t8, numSelect # load word numSelect into register $t8
         sub $s0, $t7, $t8 # calculate (numPool - numSelect) and store in $a0 (later, will use this value to simplify factorial calculations)
-        addi $s0, $s0, 1
+        addi $s0, $s0, 1 # add numDiff + 1 (for controlling the sle loop in the pfctrlNum sub-routine
         
         sw $s0, numDiff # store contents of $s0 in word numDiff
-   	lw $a0, numPool 
+   	lw $a0, numPool # load numPool into $a0; use this as the argument for pfctrlNum 
         jal pfctrlNum	# jump and link to factorial function
         sw $v0, factorialA	# store result of factorial function in the global variable "answer"
         
-        # Calculate k! using the factorial function (this will be the denominator)
+        # Calculate k! using the pfctrlDenom function (this will be the denominator)
         lw $a0, numSelect # store contents of $a0 in word numSelect
         jal pfctrlDenom	# jump and link to factorial function
         sw $v0, factorialB	# store result of factorial function in the global variable "answer"
         
+        #Load numberator and denominator into temporary variables
         lw $t9, factorialA
         lw $s1, factorialB
         
-        # Divide (n-k)!/k!    ## what you want is to factor out what num and denom have in common (LOOP, n-- each time while n > n-k
-        div $v0, $t9, $s1
+        # Divide [n:n-k)!/k!   
+        divu $v0, $t9, $s1
+	
+        # Multiply the result of [n:n-k)!/k! by the powerball variable (26 if powerball is included; 1 otherwise)
+        mult  $v0, $s2
+      	mflo $v0
         sw $v0, answer
         
-   
         # Display the results (string) 
         li $v0, 4	# print string
         la $a0, resultMessage	# load address for resultMessage (a string) 
@@ -83,14 +101,19 @@ main:
        
         # Display the results (int)  
         li $v0, 1 # print integer
-        lw $a0, answer # load word "factorial" 
+        lw $a0, answer # load word "answer" 
         syscall 
-
+        
+        # Display exit message
+        li $v0, 4	# print string
+        la $a0, stop	# load address for stop (a string) 
+        syscall 
+           
 	#System Exit 
 	li $v0, 10
 	syscall
 	
-############################################################################################################
+######################################################################################################################################################
 	
 # Input exception handling
 
@@ -110,9 +133,30 @@ tooBig:	li $v0, 4	# print string
 
 
 
-############################################################################################################	
+#######################################################################################################################################################	
+
+# Set powerball [boolean; if selected, = 26, to represent C(26, 1)= 26!/(1!*25!) = 26. If NOT selected, set equal to 1]
+
+powerball:	sw $ra, 0($sp) # save the return address
+		addi $sp, $sp, -4 # move the stack pointer 
+		lw $s2, powerballBool
+		bne $s2, 1, init
+		jr $ra
+		
+init:		mult $s2, $zero # in case user has entered a value != 1 & !=2
+		mflo $s2
+		addi $s2, $s2, 26
+		
+		addi $sp, $sp, 4 # reset the stack pointer
+        	lw $ra, 0($sp) # fetch saved (n-1)
+		jr $ra
+		
+
+#######################################################################################################################################################	
 	
-# Factorial subroutine
+# Factorial subroutines
+
+# Numerator [n:n-k)! 
 
 pfctrlNum: sw $ra, 4($sp) # save the return address
         sw $a0, 0($sp) # save the current value of n
@@ -132,11 +176,12 @@ L1:     addi $a0, $a0, -1 # n := n-1
         mul $v0, $a0, $v0 # multiply (n)*(n-1)
         jr $ra	# go back to main so that results can be displayed 
 
+# Denominator (k!)
 
 pfctrlDenom: sw $ra, 4($sp) # save the return address
         sw $a0, 0($sp) # save the current value of n
         addi $sp, $sp, -8 # move stack pointer
-        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   
+        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
         beq $t0, $zero, L2 # not, calculate n(n-1)!
         addi $v0, $zero, 1 # n=1; n!=1
         jr $ra # now multiply
