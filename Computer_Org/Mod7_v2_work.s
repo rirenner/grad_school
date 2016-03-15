@@ -1,4 +1,5 @@
 
+
 .data
         prompt1:	.asciiz "\nEnter the number of balls in pool: "
         prompt2:	.asciiz "\nEnter the number of balls to select: "  #ERROR handling! make sure this val is < 12 AND < the number of balls in the pool!!!
@@ -51,29 +52,30 @@ main:
         slt  $t6, $v0, $t5 # if numSelect < numPool + 1 , $t4 = 1; else, $t4 = 0
         bne $t6, 1, tooBig # if numSelect is not in range, branch to exception handling
 
-        # Calculate (n-k) and then call factorial function [ i.e. get (n-k)! ]
+        # Calculate (n-k) and then call factorial function [ i.e. get (n:n-k)! ]
         lw $t7, numPool	# load word numPool into register $t7 
         lw $t8, numSelect # load word numSelect into register $t8
-        sub $a0, $t7, $t8 # calculate (numPool - numSelect) and store in $a0 (later, will use this value to simplify factorial calculations)
+        sub $s0, $t7, $t8 # calculate (numPool - numSelect) and store in $a0 (later, will use this value to simplify factorial calculations)
+        addi $s0, $s0, 1
         
-        sw $a0, numDiff # store contents of $a0 in word numDiff
-        jal pfctrl	# jump and link to factorial function
+        sw $s0, numDiff # store contents of $s0 in word numDiff
+   	lw $a0, numPool 
+        jal pfctrlNum	# jump and link to factorial function
         sw $v0, factorialA	# store result of factorial function in the global variable "answer"
         
         # Calculate k! using the factorial function (this will be the denominator)
         lw $a0, numSelect # store contents of $a0 in word numSelect
-        jal pfctrl	# jump and link to factorial function
+        jal pfctrlDenom	# jump and link to factorial function
         sw $v0, factorialB	# store result of factorial function in the global variable "answer"
         
         lw $t9, factorialA
-        lw $s0, factorialB
+        lw $s1, factorialB
         
         # Divide (n-k)!/k!    ## NOT DONE YET. what you want is to factor out what num and denom have in common (LOOP, n-- each time while n > n-k
-        div $v0, $t9, $s0
+        div $v0, $t9, $s1
         sw $v0, answer
         
-        
-        
+   
         # Display the results (string) 
         li $v0, 4	# print string
         la $a0, resultMessage	# load address for resultMessage (a string) 
@@ -112,17 +114,36 @@ tooBig:	li $v0, 4	# print string
 	
 # Factorial subroutine
 
-pfctrl: sw $ra, 4($sp) # save the return address
+pfctrlNum: sw $ra, 4($sp) # save the return address
         sw $a0, 0($sp) # save the current value of n
         addi $sp, $sp, -8 # move stack pointer
-        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
+        sle $t0, $a0, $s0 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
         beq $t0, $zero, L1 # not, calculate n(n-1)!
         addi $v0, $zero, 1 # n=1; n!=1
         jr $ra # now multiply
 
 L1:     addi $a0, $a0, -1 # n := n-1
 
-        jal pfctrl # now (n-1)!
+        jal pfctrlNum # now (n-1)!
+
+        addi $sp, $sp, 8 # reset the stack pointer
+        lw $a0, 0($sp) # fetch saved (n-1)
+        lw $ra, 4($sp) # fetch return address
+        mul $v0, $a0, $v0 # multiply (n)*(n-1)
+        jr $ra	# go back to main so that results can be displayed 
+
+
+pfctrlDenom: sw $ra, 4($sp) # save the return address
+        sw $a0, 0($sp) # save the current value of n
+        addi $sp, $sp, -8 # move stack pointer
+        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
+        beq $t0, $zero, L2 # not, calculate n(n-1)!
+        addi $v0, $zero, 1 # n=1; n!=1
+        jr $ra # now multiply
+
+L2:     addi $a0, $a0, -1 # n := n-1
+
+        jal pfctrlDenom # now (n-1)!
 
         addi $sp, $sp, 8 # reset the stack pointer
         lw $a0, 0($sp) # fetch saved (n-1)
