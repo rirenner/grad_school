@@ -1,19 +1,19 @@
 
 .data
-        prompt1:	.asciiz "\nEnter the number of balls in pool: "
-        prompt2:	.asciiz "\nEnter the number of balls to select: "  #Exception: make sure this val is < 12 AND < the number of balls in the pool
-        prompt3:	.asciiz "\nEnter 1 to calculate normal odds; enter 2 to calculate odds of winning the PowerBall jackpot grand prize: " 
-	error1:		.asciiz "\nError: the number of balls selected must be an integer between 1 and 11. Please start over."
-	error2:         .asciiz "\nError: the number of balls selected must be <= the number of balls in the pool. Please start over."
-	resultMessage:	.asciiz "\nThe odds are 1 in "
-	stop:		.asciiz "\n\nProgram complete.\n"
-	numPool:	.word 0
-	numSelect: 	.word 0
-	powerballBool:	.word 1 # The red ball is C(26, 1); = 26!/(1!*25!) = 26; there is only ONE red ball; init to 1; will change pending user input
-	numDiff:	.word 0	# To store numPool- numSelect (i.e. n-k in combinatorics)
-	factorialA:    	.word 0
-	factorialB: 	.word 0
-	answer:		.word 0
+        prompt1:        .asciiz "\nEnter the number of balls in pool: "
+        prompt2:        .asciiz "\nEnter the number of balls to select: "  #Exception: make sure this val is < 12 AND < the number of balls in the pool
+        prompt3:        .asciiz "\nEnter 1 to calculate normal odds; enter 2 to calculate odds of winning the PowerBall jackpot grand prize: "
+        error1:         .asciiz "\nError: the number of balls selected must be an integer between 1 and 11. Please start over."
+        error2:         .asciiz "\nError: the number of balls selected must be <= the number of balls in the pool. Please start over."
+        resultMessage:	.asciiz "\nThe odds are 1 in "
+        stop:           .asciiz "\n\nProgram complete.\n"
+        numPool:        .word 0
+        numSelect:      .word 0
+        powerballBool:	.word 1 # The red ball is C(26, 1); = 26!/(1!*25!) = 26; there is only ONE red ball; init to 1; will change pending user input
+        numDiff:        .word 0	# To store numPool- numSelect (i.e. n-k in combinatorics)
+        factorialA:    	.word 0
+        factorialB: 	.word 0
+        answer:         .word 0
 	
 ######################################################################################################################################################	
 .text
@@ -33,7 +33,7 @@ main:
         # Store user input in the global variable numPool
        	sw $v0, numPool   	
 
-	# Prompt user to enter number of balls to select
+        # Prompt user to enter number of balls to select
         li $v0, 4 # print prompt2
         la $a0, prompt2 # load address
         syscall
@@ -73,7 +73,7 @@ main:
         addi $s0, $s0, 1 # add numDiff + 1 (for controlling the sle loop in the pfctrlNum sub-routine
         
         sw $s0, numDiff # store contents of $s0 in word numDiff
-   	lw $a0, numPool # load numPool into $a0; use this as the argument for pfctrlNum 
+        lw $a0, numPool # load numPool into $a0; use this as the argument for pfctrlNum
         jal pfctrlNum	# jump and link to factorial function
         sw $v0, factorialA	# store result of factorial function in the global variable "answer"
         
@@ -138,18 +138,18 @@ tooBig:	li $v0, 4	# print string
 # Set powerball [boolean; if selected, = 26, to represent C(26, 1)= 26!/(1!*25!) = 26. If NOT selected, set equal to 1]
 
 powerball:	sw $ra, 0($sp) # save the return address
-		addi $sp, $sp, -4 # move the stack pointer 
-		lw $s2, powerballBool
-		bne $s2, 1, init
-		jr $ra
+            addi $sp, $sp, -4 # move the stack pointer
+            lw $s2, powerballBool
+            bne $s2, 1, init
+            jr $ra
 		
-init:		mult $s2, $zero # in case user has entered a value != 1 & !=2
-		mflo $s2
-		addi $s2, $s2, 26
+init:       mult $s2, $zero # in case user has entered a value != 1 & !=2
+            mflo $s2
+            addi $s2, $s2, 26
 		
-		addi $sp, $sp, 4 # reset the stack pointer
+            addi $sp, $sp, 4 # reset the stack pointer
         	lw $ra, 0($sp) # fetch saved (n-1)
-		jr $ra
+            jr $ra
 		
 
 #######################################################################################################################################################	
@@ -158,43 +158,43 @@ init:		mult $s2, $zero # in case user has entered a value != 1 & !=2
 
 # Numerator [n:n-k)! 
 
-pfctrlNum: sw $ra, 4($sp) # save the return address
-        sw $a0, 0($sp) # save the current value of n
-        addi $sp, $sp, -8 # move stack pointer
-        sle $t0, $a0, $s0 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
-        beq $t0, $zero, L1 # not, calculate n(n-1)!
-        addi $v0, $zero, 1 # n=1; n!=1
-        jr $ra # now multiply
+pfctrlNum:  sw $ra, 4($sp) # save the return address
+            sw $a0, 0($sp) # save the current value of n
+            addi $sp, $sp, -8 # move stack pointer
+            sle $t0, $a0, $s0 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
+            beq $t0, $zero, L1 # not, calculate n(n-1)!
+            addi $v0, $zero, 1 # n=1; n!=1
+            jr $ra # now multiply
 
-L1:     addi $a0, $a0, -1 # n := n-1
+L1:         addi $a0, $a0, -1 # n := n-1
 
-        jal pfctrlNum # now (n-1)!
+            jal pfctrlNum # now (n-1)!
 
-        addi $sp, $sp, 8 # reset the stack pointer
-        lw $a0, 0($sp) # fetch saved (n-1)
-        lw $ra, 4($sp) # fetch return address
-        mul $v0, $a0, $v0 # multiply (n)*(n-1)
-        jr $ra	# go back to main so that results can be displayed 
+            addi $sp, $sp, 8 # reset the stack pointer
+            lw $a0, 0($sp) # fetch saved (n-1)
+            lw $ra, 4($sp) # fetch return address
+            mul $v0, $a0, $v0 # multiply (n)*(n-1)
+            jr $ra	# go back to main so that results can be displayed
 
 # Denominator (k!)
 
 pfctrlDenom: sw $ra, 4($sp) # save the return address
-        sw $a0, 0($sp) # save the current value of n
-        addi $sp, $sp, -8 # move stack pointer
-        slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
-        beq $t0, $zero, L2 # not, calculate n(n-1)!
-        addi $v0, $zero, 1 # n=1; n!=1
-        jr $ra # now multiply
+            sw $a0, 0($sp) # save the current value of n
+            addi $sp, $sp, -8 # move stack pointer
+            slti $t0, $a0, 2 # save 1 iteration, n=0 or n=1; n!=1   #CHANGE THIS TO MODIFY ALGEBRA!
+            beq $t0, $zero, L2 # not, calculate n(n-1)!
+            addi $v0, $zero, 1 # n=1; n!=1
+            jr $ra # now multiply
 
-L2:     addi $a0, $a0, -1 # n := n-1
+L2:         addi $a0, $a0, -1 # n := n-1
 
-        jal pfctrlDenom # now (n-1)!
+            jal pfctrlDenom # now (n-1)!
 
-        addi $sp, $sp, 8 # reset the stack pointer
-        lw $a0, 0($sp) # fetch saved (n-1)
-        lw $ra, 4($sp) # fetch return address
-        mul $v0, $a0, $v0 # multiply (n)*(n-1)
-        jr $ra	# go back to main so that results can be displayed 
+            addi $sp, $sp, 8 # reset the stack pointer
+            lw $a0, 0($sp) # fetch saved (n-1)
+            lw $ra, 4($sp) # fetch return address
+            mul $v0, $a0, $v0 # multiply (n)*(n-1)
+            jr $ra	# go back to main so that results can be displayed
 
 
 
