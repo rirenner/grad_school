@@ -1,4 +1,31 @@
 
+#####################################
+#   Christine Herlihy               #
+#   3/22/16 EN.605.204.81.SP16      #
+#   Module 7 Assignment             #
+#   Powerball Lottery Jackpot Lab   #
+#####################################
+
+
+#   This program runs in MIPS, and performs the following functions:
+#
+#   (1) Prompts the user if they would like to calculate simple odds, or odds of winning PowerBall jackpot grand prize
+#       Win = match 5 white balls pulled from bin with range [1:69] (any order; no replacement)
+#       & 1 red "power ball" from bucket with range [1:29]
+#
+#   (2) Prompts the user for two input values: (1) an integer representing the large pool of possible numbers
+#       and (2) a second integer representing the count of numbers to be selected from the large pool
+#           (implicit constraint): 0 < number selected < 12 && <= number of balls in the pool (exception handling is included)
+#
+#   (3) Displays the calculated value (i.e. odds) on the SPIM console screen
+#
+#   (4) Displays a message when the program stops
+#
+#   TO RUN: load program; click "Run", and (when prompted), enter appropriate values for number of balls in pool & number selected
+#
+#   NOTE: This program uses single precision integer arithmetic instructions, and as such, will not produce correct results if odds values >= 1 in 2 billion
+
+
 .data
         prompt1:        .asciiz "\nEnter the number of balls in pool: "
         prompt2:        .asciiz "\nEnter the number of balls to select: "  #Exception: make sure this val is < 12 AND < the number of balls in the pool
@@ -45,7 +72,7 @@ main:
         # Store user input in the global variable numSelect
         sw $v0, numSelect
         
-        # Check to make sure the number of balls selected is 1 < x < 11 && <= numPool
+        # Check to make sure the number of balls selected is 1 < x < 12 && <= numPool
         sltiu  $t3, $v0, 12 # if numSelect < 12, $t3 = 1; else, $t3 = 0
         bne $t3, 1, inRange # if numSelect is not in range, branch to exception handling
         addi $t4, $v0, 1 # add 1 to numPool and store in $t4 (to make sure numSelect <= numPool)  
