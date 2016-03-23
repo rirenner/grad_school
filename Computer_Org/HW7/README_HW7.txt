@@ -6,7 +6,6 @@
 #   Powerball Lottery Jackpot Lab   #
 #####################################
 
-
 #   This program runs in MIPS, and performs the following functions:
 #
 #   (1) Prompts the user if they would like to calculate simple odds, or odds of winning PowerBall jackpot grand prize
@@ -24,3 +23,6 @@
 #   TO RUN: load program; click "Run", and (when prompted), enter appropriate values for number of balls in pool & number selected
 #
 #   NOTE: This program uses single precision integer arithmetic instructions, and as such, will not produce correct results if odds values >= 1 in 2 billion
+#           In such cases, an exception is triggered, an overflow error message is displayed, and the user is forced to enter new values.
+#
+#   Several screenshots of sample program output are included in the directory ~/HW_outputImages
