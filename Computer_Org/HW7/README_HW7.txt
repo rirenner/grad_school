@@ -1,7 +1,6 @@
 
 #####################################
-#   Christine Herlihy               #
-#   3/22/16 EN.605.204.81.SP16      #
+#   3/22/16                         #
 #   Module 7 Assignment             #
 #   Powerball Lottery Jackpot Lab   #
 #####################################
