@@ -29,10 +29,6 @@
 #	of a larger number represents subtraction, such that IX == VIIII == 9.
 
 
-# To clarify: Should we prompt the user to enter in each string one at a time? Should we just run it for these values?
-# Loop to allow testing? 
-
-
 .data 
         # Lookup tables
         #roman:		.asciiz "IVXLCDMivxlcdm"
@@ -47,6 +43,7 @@
 	input4:		.asciiz "\n"
 	
 	# Conversion 
+	left:		.word 0
 	sum:		.word 0
 	counter:	.word 0
 	temp:		.word 0
@@ -55,7 +52,7 @@
 	convertAgain:	.word 2
         prompt1:	.asciiz "\nPlease enter the Roman Numeral to convert in all uppercase OR all lowercase letters (i.e. VII or vii): "
         outRecap:	.asciiz "\nYou entered: "
-        outFinal:	.asciiz "\n The equivalent decimal value is: "
+        outFinal:	.asciiz "\nThe equivalent decimal value is: "
         loopdriver:	.asciiz "\nWould you like to convert another number? Enter 1 for YES and 2 for NO: "  
         stop:		.asciiz "\n\nProgram complete.\n"
         
@@ -84,8 +81,11 @@ main:
         
         ### EDIT HERE: CONVERT / SHOW ALL THE TEST CASES BY DEFAULT, THEN ALLOW USER TO ENTER!
         
+        
+       # Go to sub-routines for lookup and conversion
        jal init
         
+        # Display results for the user
         
         # Load output string 1 to show the user their original input string
         la $a0, outRecap # load contents of outRecap into $a0
@@ -95,6 +95,16 @@ main:
         # Load the string the user entered 
         la $a0, input1 # load contents of input1 into $a0
         li $v0, 4 # print string
+        syscall
+        
+        # Display the equivalent decimal value
+        la $a0, outFinal # load contents of outFinal (string) into $a0
+        li $v0, 4 # print string
+        syscall
+              
+        # Print the sum
+        lw $a0, sum
+        li $v0,1
         syscall
         
         # Ask the user whether they want to convert another Roman Numeral (1 if YES; 2 if NO; default is NO)
@@ -128,7 +138,6 @@ main:
 
 # Convert Roman Numeral string to integer decimal value   
 init: 
-	
 	sw $ra, 4($sp)
 	sw $a1, 0($sp)
 	addi $sp, $sp, -8 # move stack pointer	
@@ -136,8 +145,9 @@ init:
 	la $t3, roman
 	la $t4, values
 	
-
-loop1:	lb $a0, ($t2) # This gets the FIRST byte of the string (from L to R); change the offset to get others (i.e. lb $a0, 3($t0) = I
+# Loop through each char of the input string
+loop1:	
+	lb $a0, ($t2) # This gets the FIRST byte of the string (from L to R); change the offset to get others (i.e. lb $a0, 3($t0) = I
 	beqz $a0, return # If the byte == 0, we have reached the end of the input string; jump to "return"
 	
 	li $v0, 11	# print byte to console 
@@ -149,40 +159,59 @@ loop1:	lb $a0, ($t2) # This gets the FIRST byte of the string (from L to R); cha
 	addi $t2, $t2, 1 # Move to next character in input string 
 	jal loop1 # iterate through loop1 again
 	
-index:	lb $t5, ($t3) # load the first byte of romans
+# Find the index (i.e. offset) of the selected char in the "roman" lookup table
+index:	
+	lb $t5, ($t3) # load the first byte of romans
 	beqz $t5, invalid # if we reach the end of romans and the char isn't found, it's not a valid Roman numeral
-	#beq $a0, $t5, getVal # once we find the index we want, where the romans value matches our char, need to look it up in values
-	addi $t3, $t3, 1 # if we haven't found a match, increment $t3 and iterate through the loop again
-	jal index # loop
+	sw $ra, 8($sp)
+	addi $sp, $sp, -4 # move stack pointer
+	beq $a0, $t5, getVal # once we find the index we want, where the romans value matches our char, need to look it up in values
+	jal iter # if we haven't found a match, jump to where we can increment $t3 and iterate through the loop again
+#	addi $t3, $t3, 1 # if we haven't found a match, increment $t3 and iterate through the loop again
+#	jal index # loop
 	
-
-getVal:	la $t6, roman # Get the address of the array containing Roman numeral characters
+# Use the index value to look up the char in the "values" array and get the decimal value
+getVal:	
+	la $t6, roman # Get the address of the array containing Roman numeral characters
 	la $t7, values
 	
 	sub $t8, $t3, $t6 # Get the index value of the element that matches the byte we are working with [1:7]
 	add $t7, $t7, $t8 
 	lb $t9, ($t7) 
-	sw $t9, sum
-
 	
-
-	#li $v0, 1	# print int
-       # lw $a0, sum 	# load address for stop (a string)
-       # syscall
+	#added new
+	#sw $t9, 12($sp)
+	#addi $sp, $sp, -4 # move stack pointer
 	
-
-	jr $s1
-     
-
+	
+	## added here
+	#jal compare
+	
+	addi $sp, $sp, 4 # reset the stack pointer
+        lw $ra, 8($sp) # fetch return address
+	jr $ra	# go back to main so that results can be displayed
+	
+	
+	# This is the last part of the index loop
+iter:	
+	addi $t3, $t3, 1 # if we haven't found a match, increment $t3 and iterate through the loop again
+	jal index # loop
 
 
 compare: 
+	# Base case is that the string length == 1, and thus sum = the decimal equivalent of the only Roman numeral character
+#	lw $t9, sum
+#	addi $sp, $sp, 4 # reset the stack pointer
+ #       lw $t1, 12($sp) # fetch "left"
+#	beqz $t9, base
+	
+base:	
 	
 	
 
 
 	
-	
+# Go back to main	
 return:	
 	addi $sp, $sp, 8 # reset the stack pointer
 	lw $a0, 0($sp) # fetch saved (n-1)
@@ -196,15 +225,11 @@ invalid:
         syscall
 
 	j main 
-
-
-
-
-
+        
+######################################################################################################################################################      
 
 #System Exit
 Exit: 
-
 	# Display exit message
         li $v0, 4	# print string
         la $a0, stop	# load address for stop (a string)
@@ -215,39 +240,4 @@ Exit:
         
 ######################################################################################################################################################      
 
-        
  
-        # Store user input in the global variable numPool
-       #	sw $v0, input1
-       	
-
-#	la $a0, Tell_Output #load address Tell_Output from memory and store it into arguement register 0
-#	li $v0, 4 #loads the value 4 into register $v0 which is the op code for print string
-#	syscall #reads register $v0 for op code, sees 4 and prints the string located in $a0
-
-#	la $a0, insert_into #load address insert_into from memory and store it into arguement register 0
-#	li $v0, 4 #loads the value 4 into register $v0 which is the op code for print string
-#	syscall #reads register $v0 for op code, sees 4 and prints the string located in $a0
-
-#	li $v0, 10 #loads op code into $v0 to exit program
-#	syscall #reads $v0 and exits program
-        
-        
-        
-#Then write a loop that compares the character you just read from your input to a character in all_numerals.
-# Once you find the index, get the value at the same index in all_values. 
- #For example, "X" is the third element in all_numerals and has an index of 2.
- # Go to index 2 of all_values and you get 10. If you hit null before you find a match, 
- # that means that the character you read is invalid, and you can handle it accordingly. 
-
- 
- 	la $t0, input1	#load the address of the string (see by looking at starting index of each the length of each string 
-	lb $a0, 3($t0) #This gets the FIRST byte of the string (from L to R); change the offset to get others (i.e. lb $a0, 3($t0) = I
-	li $v0, 11	# print byte to console 
-	syscall
-
-
-
-	
-	
-
