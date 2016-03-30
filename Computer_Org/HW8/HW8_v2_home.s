@@ -198,7 +198,8 @@ getVal:
 	
 	sub $t8, $t3, $t6 # Get the index value of the element that matches the byte we are working with [1:7]
 	add $t7, $t7, $t8 
-	lb $t9, ($t7) # $t9 is the decimal value that corresponds to the letter
+	lbu $t9, ($t7) # $t9 is the decimal value that corresponds to the letter
+	bgeu $t9, 232, adjust1
 	
 	#added new
 	#sw $t9, left 
@@ -215,7 +216,25 @@ getVal:
         
 	jr $ra	# go back 
 	
+
+adjust1: 
+
+	seq $a2, $t5, 68 # If the character in question == D, set $a2 to 1; else, 0
+ 	 mul $t9, $t9, $zero
+	 beq $a2, 1, adjustD
+	 addi $t9, $t9, 1000 # Char == M; decimal value = 1000
+	 
+	 
+	 jal getVal
 	
+
+
+adjustD: addi $t9, $t9, 500
+	
+	jal getVal
+		
+		
+			
 # This is the last part of the index loop
 iter:	
 	addi $t3, $t3, 1 # if we haven't found a match, increment $t3 and iterate through the loop again
