@@ -5,6 +5,9 @@
 #   Powerball Lottery Jackpot Lab   #
 #####################################
 
+# LINKING ALL THE SUBROUTINES HAS TO DO WITH STACK POINTER OF RA! 
+
+
 
 #   This program runs in MIPS, and performs the following functions:
 #
