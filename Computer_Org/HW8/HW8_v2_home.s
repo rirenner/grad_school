@@ -86,9 +86,10 @@ main:
        lw $ra, 0($sp) # Pop return address off the stack
        addi $sp, $sp, 4 # Move stack pointer
         
-        # Display results for the user
-        
-        # Load output string 1 to show the user their original input string
+
+# Display results for the user    
+display: 
+	# Load output string 1 to show the user their original input string
         la $a0, outRecap # load contents of outRecap into $a0
         li $v0, 4 # print string 
         syscall
@@ -121,7 +122,12 @@ main:
         sw $v0, convertAgain
         lw $t0, convertAgain
         
-        bne $t0, 1, Exit # if the user enters a number != 1, go to Exit
+        bne $t0, 1, Exit # if the user enters a number != 1, go to Exit    
+            
+	move $s0, $zero # reinitialize
+	sw $zero, sum # reinitialize
+	sw $zero, left # reinitialize
+        
         j main	# Go back to start if the user enters 1
         
 ######################################################################################################################################################      
@@ -195,16 +201,17 @@ getVal:
 	lb $t9, ($t7) # $t9 is the decimal value that corresponds to the letter
 	
 	#added new
-	sw $t9, 12($sp)
+	#sw $t9, left 
+	#sw $t9, 12($sp)
 	sw $ra, 16($sp)
-	addi $sp, $sp, -8 # move stack pointer
+	addi $sp, $sp, -4 # move stack pointer
 	
 	
 	jal setup
 	
-	addi $sp, $sp, 8 # reset the stack pointer
+	addi $sp, $sp, 4 # reset the stack pointer
         lw $ra, 16($sp) # Pop return address off stack
-        lw $t9, 12($sp) # fetch $t9 
+       # lw $t9, 12($sp) # fetch $t9 
         
 	jr $ra	# go back 
 	
@@ -233,8 +240,10 @@ setup:
 	
 # Base case is our first pass through the loop, where sum == 0. We just want to add the value of the first number in the string to sum, and return to loop1 to get next char.	
 base:	#lw $s0, sum
+	#lw $t9, left
 	add $s0, $s0, $t9
 	sw $s0, sum
+	sw $t9, left
 	
 	la $t3, roman
 	addi $t2, $t2, 1
@@ -247,8 +256,8 @@ base:	#lw $s0, sum
 # Here, we want to pop the previous letter's decimal value off the stack, compare it to current, process sum accordingly, and pop the current char onto the stack for the next iteration	
 calcSum: addi $sp, $sp, 8 #reset the stack pointer
  	#lw $ra, 16($sp)
- 	lw $t1, 12($sp) # pop the decimal value of the Roman numeral to the left of the current value in the original string 	
- 	
+ 	lw $t1, left # pop the decimal value of the Roman numeral to the left of the current value in the original string 	
+ 	sw $t9, left # Reset left pointer so it points to current char ("left" of *next* char)
  	
  	la $t3, roman
  	bge $t1, $t9, plus # If the decimal value of the previous char in the string is >= the current char, then we can add the current char to the sum
@@ -256,6 +265,7 @@ calcSum: addi $sp, $sp, 8 #reset the stack pointer
 
 plus:	lw $s0, sum
 	add $s0, $s0, $t9 
+	sw $s0, sum
 	
 	la $t3, roman
 
@@ -267,6 +277,7 @@ minus: lw $s0, sum
 	mul $t1, $t1, 2
 	sub $t9, $t9, $1
 	add $s0, $s0, $t9
+	sw $s0, sum
 	
 	
 	
@@ -278,10 +289,12 @@ minus: lw $s0, sum
 	
 # Go back to main	
 return:	
-	addi $sp, $sp, 8 # reset the stack pointer
-	lw $a0, 0($sp) # 
-        lw $ra, 4($sp) # fetch return address
-	jr $ra	# go back to main so that results can be displayed
+	sw $s0, sum
+	#addi $sp, $sp, 4 # reset the stack pointer
+	#lw $a0, sum # 
+       # lw $ra, 4($sp) # fetch return address
+        j display
+	#jr $ra	# go back to main so that results can be displayed
 	
 #Exception handling: User input string contains invalid character(s) 
 invalid: 
