@@ -1,6 +1,4 @@
 #####################################
-#   Christine Herlihy               #
-#   3/23/16 EN.605.204.81.SP16      #
 #   Module 8 Assignment             #
 #   From Rome to Arabia Lab  	    #
 #####################################
