@@ -1,10 +1,4 @@
 
-#####################################
-#   3/22/16                         #
-#   Module 7 Assignment             #
-#   Powerball Lottery Jackpot Lab   #
-#####################################
-
 # LINKING ALL THE SUBROUTINES HAS TO DO WITH STACK POINTER OF RA! 
 
 
