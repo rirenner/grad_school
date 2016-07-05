@@ -1,9 +1,0 @@
-/* 
- * Use of Stacks
- * README file
- */
- 
- The source code in this assignment can be compiled with JDK 8 from the command line.
-
-To run the program, use the following command line prompt: 
-java RunProgramLab1 /Users/christine/Documents/workspace2/Data_Structures_Lab1_Fall_2015/src/DataStructures_Lab1_inputFile.txt /Users/christine/Documents/workspace2/Data_Structures_Lab1_Fall_2015/src/Output.txt
