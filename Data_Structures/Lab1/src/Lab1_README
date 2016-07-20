@@ -7,3 +7,4 @@
 
 To run the program, use the following command line prompt: 
 java RunProgramLab1 /path/DataStructures_Lab1_inputFile.txt /path/Output.txt
+
