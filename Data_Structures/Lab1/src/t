@@ -1,0 +1,156 @@
+Original prefix expression: AB+C-
+LD A
+AD B
+ST TEMP1
+LD TEMP1
+SB C
+ST TEMP2
+ 
+Original prefix expression: ABC+-
+LD B
+AD C
+ST TEMP1
+LD A
+SB TEMP1
+ST TEMP2
+ 
+Original prefix expression: AB-C+DEF-+$
+LD A
+SB B
+ST TEMP1
+LD TEMP1
+AD C
+ST TEMP2
+LD E
+SB F
+ST TEMP3
+LD D
+AD TEMP3
+ST TEMP4
+LD TEMP2
+EXP TEMP4
+ST TEMP5
+ 
+Original prefix expression: ABCDE-+$*EF*-
+LD D
+SB E
+ST TEMP1
+LD C
+AD TEMP1
+ST TEMP2
+LD B
+EXP TEMP2
+ST TEMP3
+LD A
+ML TEMP3
+ST TEMP4
+LD E
+ML F
+ST TEMP5
+LD TEMP4
+SB TEMP5
+ST TEMP6
+ 
+Original prefix expression: ABC+*CBA-+*
+LD B
+AD C
+ST TEMP1
+LD A
+ML TEMP1
+ST TEMP2
+LD B
+SB A
+ST TEMP3
+LD C
+AD TEMP3
+ST TEMP4
+LD TEMP2
+ML TEMP4
+ST TEMP5
+ 
+Original prefix expression: ABC+/CBA*+
+LD B
+AD C
+ST TEMP1
+LD A
+DV TEMP1
+ST TEMP2
+LD B
+ML A
+ST TEMP3
+LD C
+AD TEMP3
+ST TEMP4
+ 
+Original prefix expression: AB-*CBA+-*
+LD A
+SB B
+ST TEMP1
+Error: less than 2 operands on stack; cannot perform operation.
+ 
+Original prefix expression: ABC-/BA-+/
+LD B
+SB C
+ST TEMP1
+LD A
+DV TEMP1
+ST TEMP2
+LD B
+SB A
+ST TEMP3
+LD TEMP2
+AD TEMP3
+ST TEMP4
+Error: less than 2 operands on stack; cannot perform operation.
+ 
+Original prefix expression: ABC+$CBA-+*
+LD B
+AD C
+ST TEMP1
+LD A
+EXP TEMP1
+ST TEMP2
+LD B
+SB A
+ST TEMP3
+LD C
+AD TEMP3
+ST TEMP4
+LD TEMP2
+ML TEMP4
+ST TEMP5
+ 
+Original prefix expression: AB0+/CBA+-/
+This postfix expression contains invalid element(s) and cannot be evaluated
+ 
+Original prefix expression: ABC*+DE-/
+LD B
+ML C
+ST TEMP1
+LD A
+AD TEMP1
+ST TEMP2
+LD D
+SB E
+ST TEMP3
+LD TEMP2
+DV TEMP3
+ST TEMP4
+ 
+Original prefix expression: AB$E%
+LD A
+EXP B
+ST TEMP1
+LD TEMP1
+MOD E
+ST TEMP2
+ 
+Original prefix expression: A344-
+This postfix expression contains invalid element(s) and cannot be evaluated
+ 
+Original prefix expression: A+-
+Error: less than 2 operands on stack; cannot perform operation.
+ 
+
+The postfix evaluator program took 18 milliseconds to run.
+14 postfix expressions were evaluated.
